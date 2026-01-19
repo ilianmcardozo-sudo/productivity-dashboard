@@ -36,7 +36,10 @@ export default function RootLayout({
               Dashboard
             </Link>
 
-            <Link className="block px-4 py-3 rounded-xl bg-gray-100" href="/">
+            <Link
+              className="block px-4 py-3 rounded-xl bg-gray-100"
+              href="/todo"
+            >
               To-Do
             </Link>
 
