@@ -1,7 +1,32 @@
+"use client"; 
+import {useState} from "react";
+import Image from "next/image";
+
 export default function Home() {
-  return (
-    <main className="min-h-screen p-8">
-      <h1 className="text-3xl font-bold">Productivity Dashboard</h1>
-    </main>
-  );
-}
+  const [tasks, setTasks] = useState<string[]>([]);
+  const [input, setInput] = useState("");
+  
+  const addTask = () => {
+    if (!input.trim()) return;
+    setTasks([...tasks, input]);
+    setInput("");
+  }
+   return (
+  <main style={{ padding: "2rem" }}>
+    <h1>Lista de tareas</h1>
+
+    <input
+      value={input}
+      onChange={(e) => setInput(e.target.value)}
+      placeholder="Escribe una tarea"
+    />
+
+    <button onClick={addTask}>Agregar</button>
+
+    <ul>
+      {tasks.map((task, index) => (
+        <li key={index}>{task}</li>
+      ))}
+    </ul>
+  </main>
+);}
