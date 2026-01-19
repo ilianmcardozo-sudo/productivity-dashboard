@@ -1,31 +1,47 @@
-"use client"; 
-import {useState} from "react";
+"use client";
+
+import { useState } from "react";
 
 export default function Home() {
+  
   const [tasks, setTasks] = useState<string[]>([]);
   const [input, setInput] = useState("");
   
   const addTask = () => {
-    if (!input.trim()) return;
+    if (input.trim() === "") return;
     setTasks([...tasks, input]);
     setInput("");
-  }
-   return (
-  <main style={{ padding: "2rem" }}>
-    <h1>Lista de tareas</h1>
+  };
+  
+  const handleKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      addTask();
+    }
+  };
 
-    <input
-      value={input}
-      onChange={(e) => setInput(e.target.value)}
-      placeholder="Escribe una tarea"
-    />
+  const deleteTask = (index: number) => {
+    setTasks(tasks.filter((_, i) => i !== index));
+  };
 
-    <button onClick={addTask}>Agregar</button>
+  return (
+    <main>
+      <h1>Lista de Tareas</h1>
 
-    <ul>
-      {tasks.map((task, index) => (
-        <li key={index}>{task}</li>
-      ))}
-    </ul>
-  </main>
-);}
+      <input
+        value={input}
+        onChange={(e) => setInput(e.target.value)}
+        onKeyDown={handleKeyDown}
+        placeholder="Escribe una tarea y presiona Enter"
+      />
+
+      <ul>
+        {tasks.map((task, index) => (
+          <li key={index}>
+            {task}
+            <button onClick={() => deleteTask(index)}> X </button>
+          </li>
+        ))}
+      </ul>
+    </main>
+  );
+}
